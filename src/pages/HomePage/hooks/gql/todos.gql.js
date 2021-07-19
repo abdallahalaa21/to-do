@@ -5,6 +5,8 @@ export default gql`
     todos {
       id
       title
+      description
+      completed
     }
   }
 `;
