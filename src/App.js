@@ -1,21 +1,11 @@
 import React from 'react';
+import HomePage from 'pages/HomePage';
+import { Route, Switch } from 'react-router-dom';
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
+  <Switch>
+    <Route path="/" component={HomePage} />
+  </Switch>
 );
 
 export default App;
