@@ -7,6 +7,7 @@ export default gql`
       title
       description
       completed
+      dueDate
     }
   }
 `;
