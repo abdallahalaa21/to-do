@@ -27,28 +27,43 @@ const useStyles = makeStyles({
 const AddNewTodoModal = ({
   open,
   handleClose,
-  createTodo
+  createTodo,
+  todo,
+  updateTodo,
+  edit
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-    reset
-  } = useForm();
+    reset,
+    setValue
+  } = useForm({
+    defaultValues: {
+      title: todo?.title,
+      description: todo?.description,
+      dueDate: todo?.dueDate,
+      id: todo?.id
+    }
+  });
   const classes = useStyles();
 
   const onSubmit = useCallback(
     async data => {
       try {
-        await createTodo(data);
+        if (edit) {
+          await updateTodo(data);
+        } else {
+          await createTodo(data);
+        }
         handleClose();
         reset();
       } catch (e) {
         console.log(e);
       }
     },
-    [createTodo, handleClose, reset]
+    [createTodo, edit, handleClose, reset, updateTodo]
   );
 
   return (
@@ -62,6 +77,10 @@ const AddNewTodoModal = ({
             aria-label="title"
             placeholder="title"
             className={classes.input}
+            defaultValue={todo?.title}
+            onChange={e =>
+              setValue('title', e.target.value)
+            }
           />
           {errors.title && (
             <Typography color="error">
@@ -85,9 +104,9 @@ const AddNewTodoModal = ({
           )}
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Controller
-              name="endDate"
+              name="dueDate"
               control={control}
-              defaultValue={new Date()}
+              defaultValue={todo?.dueDate || new Date()}
               rules={{ required: true }}
               render={({ field: { ref, ...rest } }) => (
                 <KeyboardDatePicker
@@ -105,7 +124,7 @@ const AddNewTodoModal = ({
               )}
             />
           </MuiPickersUtilsProvider>
-          {errors.endDate && (
+          {errors.dueDate && (
             <Typography color="error">
               Due date is required
             </Typography>
@@ -127,7 +146,17 @@ const AddNewTodoModal = ({
 AddNewTodoModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  createTodo: PropTypes.func.isRequired
+  createTodo: PropTypes.func,
+  updateTodo: PropTypes.func,
+  todo: PropTypes.object,
+  edit: PropTypes.bool
+};
+
+AddNewTodoModal.defaultProps = {
+  todo: {},
+  createTodo: () => {},
+  updateTodo: () => {},
+  edit: false
 };
 
 export default AddNewTodoModal;

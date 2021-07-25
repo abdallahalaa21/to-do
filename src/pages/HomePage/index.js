@@ -13,6 +13,7 @@ import AddNewTodoModal from 'components/AddNewTodo';
 import useGetTodos from './hooks/useGetTodos';
 import useCreateTodo from './hooks/useCreateTodo';
 import useUpdateTodoStatus from './hooks/useUpdateTodoStatus';
+import useUpdateTodo from './hooks/useUpdateTodo';
 
 const useStyles = makeStyles({
   btn: {
@@ -35,6 +36,7 @@ const HomePage = () => {
   const { toDos, loading, error } = useGetTodos(filter);
   const { createTodo } = useCreateTodo(filter);
   const { updateComplete } = useUpdateTodoStatus(filter);
+  const { updateTodo } = useUpdateTodo(filter);
   const handleOpen = useCallback(() => {
     setOpen(true);
   }, []);
@@ -84,6 +86,7 @@ const HomePage = () => {
                 todo={todo}
                 key={todo.id}
                 updateComplete={updateComplete}
+                updateTodo={updateTodo}
               />
             ))}
           </List>

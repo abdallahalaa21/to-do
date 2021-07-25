@@ -1,20 +1,23 @@
 import { useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 import todosInputs from 'helpers/todoInputsConstant';
-import createTodoGql from './gql/createTodo.gql';
+
 import todosGql from './gql/todos.gql';
+import updateTodoDataGql from './gql/updateTodoData.gql';
 
-const useCreateTodo = filter => {
-  const [createTodoMutation, { loading }] =
-    useMutation(createTodoGql);
+const useUpdateTodo = filter => {
+  const [updateTodoMutation, { loading }] = useMutation(
+    updateTodoDataGql
+  );
 
-  const createTodo = useCallback(
-    ({ title, description, dueDate }) =>
-      createTodoMutation({
+  const updateTodo = useCallback(
+    ({ title, description, dueDate, id }) =>
+      updateTodoMutation({
         variables: {
           title,
           description,
-          dueDate
+          dueDate,
+          id
         },
         refetchQueries: [
           {
@@ -24,10 +27,10 @@ const useCreateTodo = filter => {
         ],
         awaitRefetchQueries: true
       }),
-    [createTodoMutation, filter]
+    [updateTodoMutation, filter]
   );
 
-  return { createTodo, loading };
+  return { updateTodo, loading };
 };
 
-export default useCreateTodo;
+export default useUpdateTodo;
