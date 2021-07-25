@@ -7,7 +7,7 @@ import {
   ListItemText
 } from '@material-ui/core';
 
-const ToDoComponent = ({ todo }) => (
+const ToDoComponent = ({ todo, updateComplete }) => (
   <ListItem key={todo.id} dense>
     <ListItemIcon>
       <Checkbox
@@ -15,6 +15,12 @@ const ToDoComponent = ({ todo }) => (
         checked={todo?.completed}
         disableRipple
         inputProps={{ 'aria-labelledby': todo.id }}
+        onChange={() =>
+          updateComplete({
+            id: todo.id,
+            completed: !todo.completed
+          })
+        }
       />
     </ListItemIcon>
     <ListItemText
@@ -26,7 +32,8 @@ const ToDoComponent = ({ todo }) => (
 );
 
 ToDoComponent.propTypes = {
-  todo: PropTypes.object.isRequired
+  todo: PropTypes.object.isRequired,
+  updateComplete: PropTypes.func.isRequired
 };
 
 export default ToDoComponent;

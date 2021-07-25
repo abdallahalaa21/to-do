@@ -10,6 +10,7 @@ import Spinner from 'components/Spinner';
 import AddNewTodoModal from 'components/AddNewTodo';
 import useGetTodos from './hooks/useGetTodos';
 import useCreateTodo from './hooks/useCreateTodo';
+import useUpdateTodoStatus from './hooks/useUpdateTodoStatus';
 
 const useStyles = makeStyles({
   btn: {
@@ -23,6 +24,7 @@ const HomePage = () => {
 
   const { toDos, loading, error } = useGetTodos();
   const { createTodo } = useCreateTodo();
+  const { updateComplete } = useUpdateTodoStatus();
   const handleOpen = useCallback(() => {
     setOpen(true);
   }, []);
@@ -47,7 +49,11 @@ const HomePage = () => {
           </Button>
           <List>
             {toDos.map(todo => (
-              <Todo todo={todo} key={todo.id} />
+              <Todo
+                todo={todo}
+                key={todo.id}
+                updateComplete={updateComplete}
+              />
             ))}
           </List>
         </>
