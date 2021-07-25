@@ -11,6 +11,7 @@ export default gql`
         title: $title
         description: $description
         dueDate: $dueDate
+        completed: false
       }
     ) {
       id

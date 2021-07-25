@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query todos {
-    todos {
+  query todos($where: TodoWhereInput) {
+    todos(where: $where) {
       id
       title
       description

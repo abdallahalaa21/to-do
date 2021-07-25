@@ -15,12 +15,12 @@ const ToDoComponent = ({ todo, updateComplete }) => (
         checked={todo?.completed}
         disableRipple
         inputProps={{ 'aria-labelledby': todo.id }}
-        onChange={() =>
-          updateComplete({
+        onChange={async () => {
+          await updateComplete({
             id: todo.id,
             completed: !todo.completed
-          })
-        }
+          });
+        }}
       />
     </ListItemIcon>
     <ListItemText
