@@ -47,42 +47,44 @@ const ToDoComponent = ({
   }, []);
 
   return (
-    <ListItem key={todo.id} dense>
-      <ListItemIcon>
-        <Checkbox
-          edge="start"
-          checked={todo?.completed}
-          disableRipple
-          inputProps={{ 'aria-labelledby': todo.id }}
-          onChange={async () => {
-            await updateComplete({
-              id: todo.id,
-              completed: !todo.completed
-            });
-          }}
+    <>
+      <ListItem key={todo.id} dense>
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={todo?.completed}
+            disableRipple
+            inputProps={{ 'aria-labelledby': todo.id }}
+            onChange={async () => {
+              await updateComplete({
+                id: todo.id,
+                completed: !todo.completed
+              });
+            }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          id={todo.id}
+          primary={todo?.title}
+          secondary={todo?.description}
+          onClick={handleOpen}
+          className={classes.pointer}
         />
-      </ListItemIcon>
-      <ListItemText
-        id={todo.id}
-        primary={todo?.title}
-        secondary={todo?.description}
-        onClick={handleOpen}
-        className={classes.pointer}
-      />
-      <Modal open={open} handleClose={handleClose}>
-        <p>title: {todo.title}</p>
-        <p>description: {todo.description}</p>
-        <p>due date: {todo.dueDate}</p>
-      </Modal>
-      <ListItemSecondaryAction>
-        <IconButton
-          edge="end"
-          aria-label="edit"
-          onClick={handleOpenEditModal}
-        >
-          <EditIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
+        <Modal open={open} handleClose={handleClose}>
+          <p>title: {todo.title}</p>
+          <p>description: {todo.description}</p>
+          <p>due date: {todo.dueDate}</p>
+        </Modal>
+        <ListItemSecondaryAction>
+          <IconButton
+            edge="end"
+            aria-label="edit"
+            onClick={handleOpenEditModal}
+          >
+            <EditIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
       <AddNewTodoModal
         open={openEditModal}
         handleClose={handleCloseEditModal}
@@ -90,7 +92,7 @@ const ToDoComponent = ({
         updateTodo={updateTodo}
         edit
       />
-    </ListItem>
+    </>
   );
 };
 

@@ -9,8 +9,8 @@ const useUpdateTodoStatus = filter => {
     useMutation(updateTodoStatusGql);
 
   const updateComplete = useCallback(
-    ({ completed, id }) =>
-      updateTodoStatusMutation({
+    async ({ completed, id }) => {
+      await updateTodoStatusMutation({
         variables: {
           completed,
           id
@@ -22,7 +22,8 @@ const useUpdateTodoStatus = filter => {
           }
         ],
         awaitRefetchQueries: true
-      }),
+      });
+    },
     [filter, updateTodoStatusMutation]
   );
 
